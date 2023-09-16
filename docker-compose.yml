@@ -1,0 +1,47 @@
+# docker-compose.development.yml
+
+version: '3.8'
+services:
+
+  
+  api:
+    container_name: yogi_back
+    build: .
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_HOSTNAME=${DB_HOSTNAME}
+      - DATABASE_PORT=5432
+      - DATABASE_PASSWORD=${DB_PASSWORD}
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USERNAME=${DB_USER}
+    
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+
+  db:
+    container_name: pg_db
+    image: postgres:11
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+          - db-data:/var/lib/postgres/data
+
+volumes:
+  db-data:
+
