@@ -1,1 +1,6 @@
 react
+server
+.gitignore
+.git
+.vscode
+*__pychache__
