@@ -1,6 +1,8 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from .db import Base
 
+# The above code defines three classes: Plants, Details, and User, each representing a table in a
+# database with their respective columns.
 class Plants(Base):
     __tablename__ = 'plants'
 

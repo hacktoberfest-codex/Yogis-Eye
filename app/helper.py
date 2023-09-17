@@ -15,6 +15,8 @@ NUM_CLASSES = 6
 CLASS_LABEL =["Ashwagandha", "Cardmon", "Cumin", "Neem","Rama Tulsi","Turmeric"]
 
 
+# The `EffNet` class is a PyTorch module that implements an EfficientNet model with a custom
+# classifier for a specified number of classes and embedding size.
 
 class EffNet(nn.Module):
     def __init__(self, num_classes, embedding_size):
@@ -59,6 +61,14 @@ my_transforms = transforms.Compose([
 ])
 
 def predict(img):
+    """
+    The `predict` function takes an image as input, loads a pre-trained model, processes the image, and
+    returns the predicted class label for the image.
+    
+    :param img: The `img` parameter is the input image that you want to make predictions on. It should
+    be a byte array representing the image data
+    :return: the predicted class label for the input image.
+    """
     if torch.cuda.is_available():
         DEVICE = torch.device(type='cuda')
     else:

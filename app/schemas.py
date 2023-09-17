@@ -4,6 +4,8 @@ from pydantic import BaseModel
 
 
 
+# The above code defines several Pydantic models for a plant detail, plant, user output, and user
+# creation.
 class DetailBase(BaseModel):
     plant_family: str
     plant_bio: str
