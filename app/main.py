@@ -144,12 +144,12 @@ async def predict_plant(img_file: UploadFile ):
 
 @app.post("/plants/")
 async def create(plant: PlantBase, db: Session = Depends(get_db)):
-    db_plant = models.Plants(plant_text = plant.plant_text)
+    db_plant = Plants(plant_text = plant.plant_text)
     db.add(db_plant)
     db.commit()
     db.refresh(db_plant)
     for choice in plant.choices:
-        db_choice = models.Details(plant_family=choice.plant_family, plant_bio=choice.plant_bio, plant_descr=choice.plant_descr, plant_url= choice.plant_url, plant_id=db_plant.id)
+        db_choice = Details(plant_family=choice.plant_family, plant_bio=choice.plant_bio, plant_descr=choice.plant_descr, plant_url= choice.plant_url, plant_id=db_plant.id)
         db.add(db_choice)
     db.commit()
 
@@ -175,3 +175,11 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
 
     return new_user
+
+@app.get("/stuff/{plant_text}")
+async def read_plant_details(plant_text: str, db: Session = Depends(get_db)):
+    plant = db.query(Plants).filter(Plants.plant_text == plant_text).first()
+    result = db.query(Details).filter(Details.plant_id == plant.id).first()
+    if not result:
+        raise HTTPException(status_code=404, detail='Questions is not found')
+    return result
