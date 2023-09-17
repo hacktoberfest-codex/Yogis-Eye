@@ -12,7 +12,7 @@ const NavBar = () => {
     const [toggle, setToggle] = useState(false);
 
     return (
-        <nav className="w-full flex py-4  justify-between  items-center  sticky top-0  p-4 bg-[#008080] z-20">
+        <nav className="w-full flex py-4  justify-between  items-center  sticky top-0  p-4 bg-[#008081] z-20">
 
             <ul className="list-none sm:flex  hidden justify-around items-center flex-1">
                 <li className="flex font-poppins font-normal cursor-pointer text-[18px]    ">
