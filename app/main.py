@@ -1,14 +1,17 @@
-from fastapi import FastAPI, HTTPException, Depends, Response, status
+from fastapi import FastAPI, File, HTTPException, Depends, Response, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from .schemas import DetailBase , PlantBase, UserCreate, UserOut
-
+from .schemas import DetailBase, PlantBase, UserCreate, UserOut
+from PIL import Image
 from .models import Plants, Details, User
 from sqlalchemy.orm import Session
 from .db import get_db
 from fastapi_sqlalchemy import DBSessionMiddleware
 from datetime import datetime
+import io
 import os
+
+from .helper import predict
 load_dotenv(".env")
 app = FastAPI()
 # app.add_middleware(DBSessionMiddleware, db_url = os.environment["DATABASE_URL"])
@@ -67,6 +70,12 @@ async def create_plant_details(plant: DetailBase, db: Session = Depends(get_db))
 
     return db_plant
 
+@app.post("/predict_plant")
+async def predict_plant(img_file: UploadFile ):
+    # image = await file.read()
+    image_bytes = img_file.file.read()
+    
+    return predict(image_bytes)
 
 @app.post("/", status_code=status.HTTP_201_CREATED, response_model=UserOut)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
