@@ -9,10 +9,10 @@ import io
 
 
 IMG_PATH =''
-W_PATH = '/usr/src/app/app/weights/ayurmodelstate.pth'
+W_PATH = '/usr/src/app/app/weights/ayur_model_weights.pth'
 EMBEDDING_SIZE = 1280
 NUM_CLASSES = 6
-CLASS_LABEL =['Neem', 'Rama tulsi', 'Ashwagandha', 'Turmeric', 'Cardamom', 'Cumin']
+CLASS_LABEL =["Ashwagandha", "Cardmon", "Cumin", "Neem","Rama Tulsi","Turmeric"]
 
 
 
