@@ -179,7 +179,11 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
 @app.get("/stuff/{plant_text}")
 async def read_plant_details(plant_text: str, db: Session = Depends(get_db)):
     plant = db.query(Plants).filter(Plants.plant_text == plant_text).first()
-    result = db.query(Details).filter(Details.plant_id == plant.id).first()
-    if not result:
+    if (
+        result := db.query(Details)
+        .filter(Details.plant_id == plant.id)
+        .first()
+    ):
+        return result
+    else:
         raise HTTPException(status_code=404, detail='Questions is not found')
-    return result
