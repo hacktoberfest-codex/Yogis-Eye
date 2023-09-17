@@ -142,6 +142,17 @@ async def predict_plant(img_file: UploadFile ):
     image_bytes = img_file.file.read()
     return predict(image_bytes)
 
+@app.post("/plants/")
+async def create(plant: PlantBase, db: Session = Depends(get_db)):
+    db_plant = models.Plants(plant_text = plant.plant_text)
+    db.add(db_plant)
+    db.commit()
+    db.refresh(db_plant)
+    for choice in plant.choices:
+        db_choice = models.Details(plant_family=choice.plant_family, plant_bio=choice.plant_bio, plant_descr=choice.plant_descr, plant_url= choice.plant_url, plant_id=db_plant.id)
+        db.add(db_choice)
+    db.commit()
+
 @app.post("/", status_code=status.HTTP_201_CREATED, response_model=UserOut)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     """

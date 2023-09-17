@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from typing import List
 
 
 
@@ -17,7 +17,7 @@ class DetailBase(BaseModel):
 
 class PlantBase(BaseModel):
     plant_text:str
-    
+    choices: List[DetailBase]
     class Config:
         orm_mode = True
         
