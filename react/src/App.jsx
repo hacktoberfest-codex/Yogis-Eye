@@ -12,7 +12,7 @@ import Footer from './pages/footer'
 
 function App() {
   const [count, setCount] = useState(0)
-  const name = "Rohit"
+
 
   return (
     <div className='bg-[#b2d8d8]'>

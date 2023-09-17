@@ -1,0 +1,8 @@
+react
+server
+.gitignore
+.git
+.vscode
+*__pychache__
+dataset
+notebooks

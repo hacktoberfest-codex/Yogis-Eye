@@ -1,4 +1,6 @@
 venv
 env
-__init__
+server
 __pycache__
+.vscode
+.env
